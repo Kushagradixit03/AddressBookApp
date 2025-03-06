@@ -1,6 +1,5 @@
 package com.example.AddressBookApp.Controller;
 
-import com.example.AddressBookApp.DTO.AddressBookDTO;
 import com.example.AddressBookApp.Model.AddressBook;
 import com.example.AddressBookApp.Services.AddressBookServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,50 +9,54 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/addressbook")
 public class AddressBookController {
 
+    private final AddressBookServices addressBookService;
+
+    // Constructor-based dependency injection (recommended)
     @Autowired
-    private AddressBookServices addressBookService;
-
-    // GET: Get all contacts
-    @GetMapping
-    public ResponseEntity<List<AddressBookDTO>> getAllContacts() {
-        List<AddressBookDTO> contactDTOs = addressBookService.getAllContacts(); // Should return List<AddressBookDTO>
-        return new ResponseEntity<>(contactDTOs, HttpStatus.OK); // Return List<AddressBookDTO>
+    public AddressBookController(AddressBookServices addressBookService) {
+        this.addressBookService = addressBookService;
     }
 
-    // GET: Get contact by ID
-    @GetMapping("/{id}")
-    public ResponseEntity<AddressBookDTO> getContactById(@PathVariable Long id) {
-        Optional<AddressBookDTO> contact = addressBookService.getContactById(id); // Should return AddressBookDTO
-        return contact.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-    // POST: Create a new contact
+    // Endpoint to create a new contact
     @PostMapping
-    public ResponseEntity<AddressBookDTO> createContact(@RequestBody AddressBookDTO addressBookDTO) {
-        AddressBookDTO createdContact = addressBookService.createContact(addressBookDTO); // Handle AddressBookDTO
-        return new ResponseEntity<>(createdContact, HttpStatus.CREATED);
+    public ResponseEntity<AddressBook> createContact(@RequestBody AddressBook addressBook) {
+        AddressBook newContact = addressBookService.createContact(addressBook);
+        return new ResponseEntity<>(newContact, HttpStatus.CREATED);
     }
 
-    // PUT: Update a contact by ID
+    // Endpoint to get all contacts
+    @GetMapping
+    public ResponseEntity<List<AddressBook>> getAllContacts() {
+        List<AddressBook> contacts = addressBookService.getAllContacts();
+        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    }
+
+    // Endpoint to get a contact by id
+    @GetMapping("/{id}")
+    public ResponseEntity<AddressBook> getContactById(@PathVariable Long id) {
+        Optional<AddressBook> addressBook = addressBookService.getContactById(id);
+        if (addressBook.isPresent()) {
+            return new ResponseEntity<>(addressBook.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    // Endpoint to update a contact
     @PutMapping("/{id}")
-    public ResponseEntity<AddressBookDTO> updateContact(@PathVariable Long id, @RequestBody AddressBookDTO addressBookDTO) {
-        AddressBookDTO updatedContact = addressBookService.updateContact(id, addressBookDTO); // Handle AddressBookDTO
-        return updatedContact != null ? new ResponseEntity<>(updatedContact, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<AddressBook> updateContact(@PathVariable Long id, @RequestBody AddressBook addressBook) {
+        AddressBook updatedContact = addressBookService.updateContact(id, addressBook);
+        return new ResponseEntity<>(updatedContact, HttpStatus.OK);
     }
 
-    // DELETE: Delete a contact by ID
+    // Endpoint to delete a contact
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
-        boolean isDeleted = addressBookService.deleteContact(id);
-        return isDeleted ? new ResponseEntity<>(HttpStatus.NO_CONTENT)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        addressBookService.deleteContact(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
