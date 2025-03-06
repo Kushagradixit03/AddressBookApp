@@ -23,19 +23,23 @@ public class AddressBookServices {
         return addressBookRepository.findById(id);
     }
 
-    public AddressBook addContact(AddressBook addressBook) {
+    public AddressBook createContact(AddressBook addressBook) {
         return addressBookRepository.save(addressBook);
     }
 
-    public void deleteContact(Long id) {
-        addressBookRepository.deleteById(id);
+    public AddressBook updateContact(Long id, AddressBook addressBookDetails) {
+        if (addressBookRepository.existsById(id)) {
+            addressBookDetails.setId(id);
+            return addressBookRepository.save(addressBookDetails);
+        }
+        return null; // Or throw custom exception
     }
 
-    public AddressBook updateContact(Long id, AddressBook addressBook) {
+    public boolean deleteContact(Long id) {
         if (addressBookRepository.existsById(id)) {
-            addressBook.setId(id);
-            return addressBookRepository.save(addressBook);
+            addressBookRepository.deleteById(id);
+            return true;
         }
-        return null;
+        return false;
     }
 }
