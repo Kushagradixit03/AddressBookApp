@@ -1,51 +1,48 @@
 package com.example.AddressBookApp.Services;
 
-import com.example.AddressBookApp.Model.AddressBook;
-import com.example.AddressBookApp.Repository.AddressBookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.AddressBookApp.Model.AddressBookEntry;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class AddressBookServices {
 
-    private final AddressBookRepository addressBookRepository;
+    private List<AddressBookEntry> addressBookList = new ArrayList<>();
 
-    // Constructor-based dependency injection (best practice)
-    @Autowired
-    public AddressBookServices(AddressBookRepository addressBookRepository) {
-        this.addressBookRepository = addressBookRepository;
+    // Create or Add AddressBook Entry
+    public AddressBookEntry addAddressBookEntry(AddressBookEntry entry) {
+        addressBookList.add(entry);
+        return entry;
     }
 
-    // Create a new address book entry
-    public AddressBook createContact(AddressBook addressBook) {
-        return addressBookRepository.save(addressBook);
+    // Get all AddressBook Entries
+    public List<AddressBookEntry> getAllEntries() {
+        return addressBookList;
     }
 
-    // Get all address book entries
-    public List<AddressBook> getAllContacts() {
-        return addressBookRepository.findAll();
+    // Get AddressBook Entry by ID
+    public Optional<AddressBookEntry> getAddressBookEntryById(Long id) {
+        return addressBookList.stream().filter(entry -> entry.getId().equals(id)).findFirst();
     }
 
-    // Get a specific contact by id
-    public Optional<AddressBook> getContactById(Long id) {
-        return addressBookRepository.findById(id);
+    // Update AddressBook Entry by ID
+    public Optional<AddressBookEntry> updateAddressBookEntry(Long id, AddressBookEntry updatedEntry) {
+        Optional<AddressBookEntry> entryOptional = getAddressBookEntryById(id);
+        if (entryOptional.isPresent()) {
+            AddressBookEntry entry = entryOptional.get();
+            entry.setName(updatedEntry.getName());
+            entry.setPhoneNumber(updatedEntry.getPhoneNumber());
+            entry.setEmail(updatedEntry.getEmail());
+            return Optional.of(entry);
+        }
+        return Optional.empty();
     }
 
-    // Update an existing contact by id
-    public AddressBook updateContact(Long id, AddressBook addressBookDetails) {
-        AddressBook addressBook = addressBookRepository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
-        addressBook.setName(addressBookDetails.getName());
-        addressBook.setEmail(addressBookDetails.getEmail());
-        addressBook.setPhoneNumber(addressBookDetails.getPhoneNumber());
-        return addressBookRepository.save(addressBook);
-    }
-
-    // Delete a contact by id
-    public void deleteContact(Long id) {
-        AddressBook addressBook = addressBookRepository.findById(id).orElseThrow(() -> new RuntimeException("Contact not found"));
-        addressBookRepository.delete(addressBook);
+    // Delete AddressBook Entry by ID
+    public boolean deleteAddressBookEntry(Long id) {
+        return addressBookList.removeIf(entry -> entry.getId().equals(id));
     }
 }
