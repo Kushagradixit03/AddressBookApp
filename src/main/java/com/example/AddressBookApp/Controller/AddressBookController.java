@@ -1,10 +1,7 @@
 package com.example.AddressBookApp.Controller;
-
-import com.example.AddressBookApp.Model.AddressBook;
+import com.example.AddressBookApp.Model.AddressBookEntry;
 import com.example.AddressBookApp.Services.AddressBookServices;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,49 +11,36 @@ import java.util.Optional;
 @RequestMapping("/api/addressbook")
 public class AddressBookController {
 
-    private final AddressBookServices addressBookService;
-
-    // Constructor-based dependency injection (recommended)
     @Autowired
-    public AddressBookController(AddressBookServices addressBookService) {
-        this.addressBookService = addressBookService;
-    }
+    private AddressBookServices addressBookService;
 
-    // Endpoint to create a new contact
-    @PostMapping
-    public ResponseEntity<AddressBook> createContact(@RequestBody AddressBook addressBook) {
-        AddressBook newContact = addressBookService.createContact(addressBook);
-        return new ResponseEntity<>(newContact, HttpStatus.CREATED);
-    }
-
-    // Endpoint to get all contacts
+    // GET all address book entries
     @GetMapping
-    public ResponseEntity<List<AddressBook>> getAllContacts() {
-        List<AddressBook> contacts = addressBookService.getAllContacts();
-        return new ResponseEntity<>(contacts, HttpStatus.OK);
+    public List<AddressBookEntry> getAllEntries() {
+        return addressBookService.getAllEntries();
     }
 
-    // Endpoint to get a contact by id
+    // GET address book entry by ID
     @GetMapping("/{id}")
-    public ResponseEntity<AddressBook> getContactById(@PathVariable Long id) {
-        Optional<AddressBook> addressBook = addressBookService.getContactById(id);
-        if (addressBook.isPresent()) {
-            return new ResponseEntity<>(addressBook.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Optional<AddressBookEntry> getAddressBookEntryById(@PathVariable Long id) {
+        return addressBookService.getAddressBookEntryById(id);
     }
 
-    // Endpoint to update a contact
+    // POST create a new address book entry
+    @PostMapping
+    public AddressBookEntry addAddressBookEntry(@RequestBody AddressBookEntry entry) {
+        return addressBookService.addAddressBookEntry(entry);
+    }
+
+    // PUT update an existing address book entry
     @PutMapping("/{id}")
-    public ResponseEntity<AddressBook> updateContact(@PathVariable Long id, @RequestBody AddressBook addressBook) {
-        AddressBook updatedContact = addressBookService.updateContact(id, addressBook);
-        return new ResponseEntity<>(updatedContact, HttpStatus.OK);
+    public Optional<AddressBookEntry> updateAddressBookEntry(@PathVariable Long id, @RequestBody AddressBookEntry updatedEntry) {
+        return addressBookService.updateAddressBookEntry(id, updatedEntry);
     }
 
-    // Endpoint to delete a contact
+    // DELETE an address book entry
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteContact(@PathVariable Long id) {
-        addressBookService.deleteContact(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public boolean deleteAddressBookEntry(@PathVariable Long id) {
+        return addressBookService.deleteAddressBookEntry(id);
     }
 }
