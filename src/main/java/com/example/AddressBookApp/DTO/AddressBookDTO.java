@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor // Generates a no-args constructor
 @AllArgsConstructor // Generates an all-args constructor
 //<==========================UC6-Lombok Library ==============================>
-public class AddressBookDTO {
+public class AddressBookDTO {   
     private Long id;
     private String name;
     private String email;
