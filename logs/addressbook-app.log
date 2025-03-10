@@ -113,3 +113,34 @@ Caused by: com.mysql.cj.exceptions.UnableToConnectException: Public Key Retrieva
 2025-03-10T17:05:56.949+05:30  INFO 22724 --- [AddressBookApp] [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
 2025-03-10T17:05:57.003+05:30  INFO 22724 --- [AddressBookApp] [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
 2025-03-10T17:05:57.013+05:30  INFO 22724 --- [AddressBookApp] [restartedMain] c.e.A.AddressBookAppApplication          : Started AddressBookAppApplication in 9.106 seconds (process running for 9.988)
+2025-03-10T17:14:47.274+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-03-10T17:14:47.277+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-03-10T17:14:47.290+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 12 ms
+2025-03-10T17:14:47.317+05:30  WARN 22724 --- [AddressBookApp] [http-nio-8080-exec-1] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' is not supported]
+2025-03-10T17:14:53.244+05:30  WARN 22724 --- [AddressBookApp] [http-nio-8080-exec-3] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpRequestMethodNotSupportedException: Request method 'PUT' is not supported]
+2025-03-10T17:15:08.212+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-4] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:15:08.213+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-4] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:15:55.473+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-6] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:15:55.474+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-6] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:15:57.489+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-5] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:15:57.490+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-5] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:16:57.795+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Controller.AddressBookController   : Received request to add new AddressBook entry: com.example.AddressBookApp.Model.AddressBookEntry@10f7e80d
+2025-03-10T17:16:57.795+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Services.AddressBookServices       : Adding new AddressBook entry: com.example.AddressBookApp.Model.AddressBookEntry@10f7e80d
+2025-03-10T17:19:38.168+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-2] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:19:38.169+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-2] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:19:58.168+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-3] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:19:58.169+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-3] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:20:04.156+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-4] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:20:04.156+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-4] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:20:07.973+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-6] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:20:07.974+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-6] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T17:20:13.834+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-5] c.e.A.Controller.AddressBookController   : Received request to add new AddressBook entry: com.example.AddressBookApp.Model.AddressBookEntry@67593295
+2025-03-10T17:20:13.834+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-5] c.e.A.Services.AddressBookServices       : Adding new AddressBook entry: com.example.AddressBookApp.Model.AddressBookEntry@67593295
+2025-03-10T17:20:36.688+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-7] c.e.A.Controller.AddressBookController   : Received request to delete AddressBook entry with ID: 1
+2025-03-10T17:20:36.689+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-7] c.e.A.Services.AddressBookServices       : Deleting AddressBook entry with ID: 1
+2025-03-10T17:20:36.690+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-7] c.e.A.Services.AddressBookServices       : Successfully deleted AddressBook entry with ID: 1
+2025-03-10T17:20:50.592+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Controller.AddressBookController   : Received request to delete AddressBook entry with ID: 1
+2025-03-10T17:20:50.593+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Services.AddressBookServices       : Deleting AddressBook entry with ID: 1
+2025-03-10T17:20:50.593+05:30  WARN 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Services.AddressBookServices       : Failed to delete AddressBook entry with ID: 1 (not found)
+2025-03-10T17:21:00.799+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-9] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
+2025-03-10T17:21:00.799+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-9] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
