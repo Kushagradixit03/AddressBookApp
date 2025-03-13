@@ -144,3 +144,6 @@ Caused by: com.mysql.cj.exceptions.UnableToConnectException: Public Key Retrieva
 2025-03-10T17:20:50.593+05:30  WARN 22724 --- [AddressBookApp] [http-nio-8080-exec-8] c.e.A.Services.AddressBookServices       : Failed to delete AddressBook entry with ID: 1 (not found)
 2025-03-10T17:21:00.799+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-9] c.e.A.Controller.AddressBookController   : Received request to fetch all AddressBook entries
 2025-03-10T17:21:00.799+05:30  INFO 22724 --- [AddressBookApp] [http-nio-8080-exec-9] c.e.A.Services.AddressBookServices       : Fetching all AddressBook entries
+2025-03-10T18:30:12.297+05:30  INFO 22724 --- [AddressBookApp] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-03-10T18:30:12.413+05:30  INFO 22724 --- [AddressBookApp] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-03-10T18:30:12.504+05:30  INFO 22724 --- [AddressBookApp] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
