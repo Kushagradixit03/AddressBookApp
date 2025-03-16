@@ -36,13 +36,15 @@ public class ContactService {
         Contact existingContact = contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contact not found"));
 
-        existingContact.setName(updatedContact.getName());
+        existingContact.setName(updatedContact.getName());  // Should work
         existingContact.setEmail(updatedContact.getEmail());
         existingContact.setPhone(updatedContact.getPhone());
 
         Contact savedContact = contactRepository.save(existingContact);
-        return new ResponseDTO<Contact>("Contact updated successfully", savedContact);
+        return new ResponseDTO<>("Contact updated successfully", savedContact);
     }
+
+
 
     public ResponseDTO<String> deleteContact(Long id) {
         contactRepository.deleteById(id);
