@@ -17,9 +17,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Updated way to disable CSRF in Spring Security 6
+                .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for Postman testing
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/register", "/api/auth/login").permitAll() // Allow register & login
+                        .requestMatchers(
+                                "/api/auth/register",
+                                "/api/auth/login",
+                                "/api/auth/forgot-password",
+                                "/api/auth/reset-password"
+                        ).permitAll() // Allow authentication and password reset
                         .anyRequest().authenticated() // Secure all other endpoints
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)); // Stateless JWT auth
@@ -32,4 +37,3 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 }
-

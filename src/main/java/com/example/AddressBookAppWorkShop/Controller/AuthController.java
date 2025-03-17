@@ -1,5 +1,7 @@
 package com.example.AddressBookAppWorkShop.Controller;
 
+import com.example.AddressBookAppWorkShop.DTO.ForgotPasswordRequest;
+import com.example.AddressBookAppWorkShop.DTO.ResetPasswordRequest;
 import com.example.AddressBookAppWorkShop.DTO.UserDTO;
 import com.example.AddressBookAppWorkShop.service.AuthService;
 import com.example.AddressBookAppWorkShop.service.UserService;
@@ -29,5 +31,14 @@ public class AuthController {
         return authService.login(userDTO);
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+        return authService.forgotPassword(request);
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) {
+        return authService.resetPassword(request);
+    }
 
 }
