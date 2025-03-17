@@ -4,9 +4,12 @@ import com.example.AddressBookAppWorkShop.DTO.ResponseDTO;
 import com.example.AddressBookAppWorkShop.interfaces.IAddressBookService;
 import com.example.AddressBookAppWorkShop.model.Contact;
 import com.example.AddressBookAppWorkShop.repository.ContactRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AddressBookService implements IAddressBookService {
@@ -18,12 +21,14 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
+    @Cacheable(value = "contacts")
     public ResponseDTO<List<Contact>> getAllContacts() {
         List<Contact> contacts = contactRepository.findAll();
         return new ResponseDTO<>("Contacts fetched successfully", contacts);
     }
 
     @Override
+    @Cacheable(value = "contact", key = "#id")
     public ResponseDTO<Contact> getContactById(Long id) {
         Contact contact = contactRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Contact not found with ID: " + id));
@@ -31,12 +36,15 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
+    @CacheEvict(value = "contacts", allEntries = true)
     public ResponseDTO<Contact> addContact(Contact contact) {
         Contact savedContact = contactRepository.save(contact);
         return new ResponseDTO<>("Contact added successfully", savedContact);
     }
 
     @Override
+    @CachePut(value = "contact", key = "#id")
+    @CacheEvict(value = "contacts", allEntries = true)
     public ResponseDTO<Contact> updateContact(Long id, Contact updatedContact) {
         return contactRepository.findById(id)
                 .map(existingContact -> {
@@ -56,6 +64,7 @@ public class AddressBookService implements IAddressBookService {
     }
 
     @Override
+    @CacheEvict(value = {"contacts", "contact"}, allEntries = true)
     public ResponseDTO<String> deleteContact(Long id) {
         if (!contactRepository.existsById(id)) {
             throw new RuntimeException("Contact not found with ID: " + id);
