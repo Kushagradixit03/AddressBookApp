@@ -4,6 +4,7 @@ import com.example.AddressBookAppWorkShop.DTO.ResponseDTO;
 import com.example.AddressBookAppWorkShop.interfaces.IAddressBookService;
 import com.example.AddressBookAppWorkShop.model.Contact;
 import com.example.AddressBookAppWorkShop.repository.ContactRepository;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -15,9 +16,11 @@ import java.util.List;
 public class AddressBookService implements IAddressBookService {
 
     private final ContactRepository contactRepository;
+    private final RabbitTemplate rabbitTemplate;
 
-    public AddressBookService(ContactRepository contactRepository) {
+    public AddressBookService(ContactRepository contactRepository,RabbitTemplate rabbitTemplate) {
         this.contactRepository = contactRepository;
+        this.rabbitTemplate=rabbitTemplate;
     }
 
     @Override
@@ -39,8 +42,13 @@ public class AddressBookService implements IAddressBookService {
     @CacheEvict(value = "contacts", allEntries = true)
     public ResponseDTO<Contact> addContact(Contact contact) {
         Contact savedContact = contactRepository.save(contact);
+
+        // Publish event to RabbitMQ
+        rabbitTemplate.convertAndSend("addressbook.exchange", "contact.add", savedContact);
+
         return new ResponseDTO<>("Contact added successfully", savedContact);
     }
+
 
     @Override
     @CachePut(value = "contact", key = "#id")
